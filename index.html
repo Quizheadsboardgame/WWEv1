@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Wrestling Entertainment Quiz</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Baloo 2', sans-serif;
+            background-color: #38B6FF; /* Background color */
+            color: black;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        #yellow-box {
+            width: 200px;
+            height: 200px;
+            background-color: #FED405; /* Yellow color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+            border: 5px solid black; /* Black edging */
+            transition: transform 0.1s ease-in-out;
+        }
+
+        #question-answer {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Keyframes for the bounce animation */
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Class to trigger the bounce animation */
+        .animate-bounce {
+            animation: bounce 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="yellow-box">WORLD WRESTLING ENTERTAINMENT</div>
+
+    <div id="question-answer"></div>
+
+    <script>
+        const yellowBox = document.getElementById("yellow-box");
+        const questionAnswerDiv = document.getElementById("question-answer");
+
+        // Array of WWE trivia questions and answers
+        const wweQuestions = [
+            { question: "Who is the longest reigning WWE Champion of all time?", answer: "Bruno Sammartino" },
+            { question: "Which WWE Superstar is known as 'The Deadman'?", answer: "The Undertaker" },
+            { question: "Who won the first ever Royal Rumble match?", answer: "Hacksaw Jim Duggan" },
+            { question: "What year did the first WrestleMania take place?", answer: "1985" },
+            { question: "Who ended The Undertaker’s WrestleMania undefeated streak?", answer: "Brock Lesnar" },
+            { question: "Which WWE Superstar is known as 'The Viper'?", answer: "Randy Orton" },
+            { question: "Who was the first WWE Universal Champion?", answer: "Finn Bálor" },
+            { question: "Who is the first WWE Superstar to win both the WWE and Universal Championships?", answer: "Roman Reigns" },
+            { question: "Which wrestler’s catchphrase is 'Austin 3:16 says I just whooped your a**'?", answer: "Stone Cold Steve Austin" },
+            { question: "Which wrestler has the most Royal Rumble victories?", answer: "Stone Cold Steve Austin" },
+            { question: "What is the name of John Cena's finishing move?", answer: "Attitude Adjustment" },
+            { question: "Which WWE faction included Triple H, Shawn Michaels, and Chyna?", answer: "D-Generation X" },
+            { question: "Who won the first Money in the Bank ladder match?", answer: "Edge" },
+            { question: "Which WWE Superstar is known for the move '619'?", answer: "Rey Mysterio" },
+            { question: "Who won the first ever WWE Women’s Royal Rumble?", answer: "Asuka" },
+            { question: "Who was the first WWE Women's Champion in the modern era?", answer: "Trish Stratus" },
+            { question: "Who won the WWE Championship in the main event of WrestleMania 35?", answer: "Kofi Kingston" },
+            { question: "Who was the first African-American WWE Champion?", answer: "The Rock" },
+            { question: "Who was the first wrestler to hold the WWE and WCW Championship simultaneously?", answer: "Chris Jericho" },
+            { question: "What was the main event of the first ever WrestleMania?", answer: "Hulk Hogan & Mr. T vs. Roddy Piper & Paul Orndorff" },
+            { question: "Who is the first WWE Superstar to win the WWE Championship 16 times?", answer: "John Cena" },
+            { question: "Which wrestler is known as 'The Heartbreak Kid'?", answer: "Shawn Michaels" },
+            { question: "What is The Undertaker's finishing move?", answer: "Tombstone Piledriver" },
+            { question: "Who won the WWE Championship at WrestleMania 21?", answer: "John Cena" },
+            { question: "Who is the first WWE Superstar to hold the Intercontinental and WWE Championships simultaneously?", answer: "The Ultimate Warrior" },
+            { question: "Who was the first female to be inducted into the Hall of Fame?", answer: "The Fabulous Moolah" },
+            { question: "Who holds the record for most WrestleMania main event appearances?", answer: "Hulk Hogan" },
+            { question: "Who was the first wrestler to win the Royal Rumble from the number 1 spot?", answer: "Shawn Michaels" },
+            { question: "Which WWE Superstar is known as 'The Game'?", answer: "Triple H" },
+            { question: "Who is known for the catchphrase 'Rest in Peace'?", answer: "The Undertaker" },
+            { question: "Who won the first Hell in a Cell match?", answer: "Shawn Michaels" },
+            { question: "What is Roman Reigns' signature move?", answer: "Superman Punch" },
+            { question: "Who was the youngest WWE Champion in history?", answer: "Brock Lesnar" },
+            { question: "Which WWE Superstar is known as 'The Rated-R Superstar'?", answer: "Edge" },
+            { question: "Who did The Rock defeat to win his first WWE Championship?", answer: "Mankind" },
+            { question: "Which WWE Superstar has the most combined days as WWE Champion?", answer: "Bruno Sammartino" },
+            { question: "Who was the first WWE Superstar to win the Royal Rumble twice?", answer: "Hulk Hogan" },
+            { question: "Who was the first female to main event WrestleMania?", answer: "Becky Lynch" },
+            { question: "Which wrestler is known for the phrase 'The Champ is Here'?", answer: "John Cena" },
+            { question: "What is Brock Lesnar's finishing move?", answer: "F-5" },
+            { question: "Which WWE Superstar's entrance theme is 'Metalingus' by Alter Bridge?", answer: "Edge" },
+            { question: "Who won the WWE Championship at WrestleMania 23?", answer: "John Cena" },
+            { question: "Which WWE Superstar won the 2020 Royal Rumble?", answer: "Drew McIntyre" },
+            { question: "Who was the first wrestler to win the Royal Rumble three times?", answer: "Stone Cold Steve Austin" },
+            { question: "Who did Becky Lynch defeat to become 'Becky 2 Belts'?", answer: "Ronda Rousey and Charlotte Flair" },
+            { question: "Who holds the record for most Intercontinental Championship reigns?", answer: "Chris Jericho" },
+            { question: "What is the name of Seth Rollins' finishing move?", answer: "The Stomp" }
+        ];
+
+        let shuffledQuestions = [];
+        let questionIndex = 0;
+
+        // Shuffle the questions array
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        // Initialize questions
+        function initializeQuestions() {
+            shuffledQuestions = shuffleArray([...wweQuestions]);
+            questionIndex = 0;
+            displayQuestion();
+        }
+
+        // Function to display the current question
+        function displayQuestion() {
+            if (shuffledQuestions.length === 0) {
+                questionAnswerDiv.innerHTML = "<strong>No more questions!</strong>";
+                return;
+            }
+            const currentQA = shuffledQuestions[questionIndex];
+            questionAnswerDiv.innerHTML = `<strong>Question:</strong> ${currentQA.question}<br><strong>Answer:</strong> ${currentQA.answer}`;
+        }
+
+        // Animate the yellow box when clicked
+        yellowBox.addEventListener("click", () => {
+            yellowBox.classList.add("animate-bounce");
+            setTimeout(() => {
+                yellowBox.classList.remove("animate-bounce");
+            }, 300);
+
+            questionIndex = (questionIndex + 1) % shuffledQuestions.length;
+            displayQuestion();
+        });
+
+        // Initialize questions on page load
+        window.onload = initializeQuestions;
+    </script>
+
+</body>
+</html>
